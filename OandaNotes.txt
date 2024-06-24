@@ -1,0 +1,10 @@
+Oanda
+
+api key: 7203735f4489a07b1fdaa82e0825b643-037a13c8ecd863561ee2fb38166bda77
+acc: 101-011-28651499-001
+
+run vitural environment (Jupyter)
+open command prompt (Windows)
+1) => python -m venv venv
+2) => venv\Scripts\Activate
+3) => (to run type) jupyter notebook
