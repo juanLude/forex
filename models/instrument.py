@@ -1,8 +1,8 @@
 class Instrument:
     
-    def __init__(self,name, inst_type,displayName, pipLocation, tradeUnitsPrecision, marginRate):
+    def __init__(self,name, ins_type,displayName, pipLocation, tradeUnitsPrecision, marginRate):
         self.name = name
-        self.inst_type = inst_type
+        self.ins_type = ins_type
         self.displayName = displayName
         self.pipLocation = pow(10, pipLocation)
         self.tradeUnitsPrecision = tradeUnitsPrecision
@@ -15,7 +15,7 @@ class Instrument:
     def FromApiObject(cls, ob):
         return Instrument(
             ob['name'],
-            ob['ins_type'],
+            ob['type'],
             ob['displayName'],
             ob['pipLocation'],
             ob['tradeUnitsPrecision'],
