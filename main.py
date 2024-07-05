@@ -10,4 +10,4 @@ if __name__ == '__main__':
     # instrumentCollection.CreateFile(api.get_account_instruments(),"./data")
     # instrumentCollection.LoadInstruments("./data")
     # instrumentCollection.PrintInstruments()
-    run_ma_sim(curr_list=["EUR","USD","AUD"])
+    run_ma_sim(curr_list=["EUR","USD","GBP"])
