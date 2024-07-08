@@ -1,4 +1,5 @@
 import pandas as pd
+import os.path
 from infrastructure.instrument_collection import instrumentCollection as ic
 
 class MAResult:
@@ -72,15 +73,37 @@ def assess_pair(price_data, ma_l, ma_s, instrument,granularity):
         ma_s,
         granularity
     )
-def append_dt_to_file(df,filename):
-    pass
+def append_df_to_file(df,filename):
+    
+    if os.path.isfile(filename):
+        fd = pd.read_pickle(filename)
+        df = pd.concat([fd,df])
+    
+    df.reset_index(inplace=True,drop=True)
+    df.to_pickle(filename)
+    print(filename, df.shape)
+    print(df.tail(2))
 
-def process_results(results_list):
+def get_fullname(filepath,filename):
+    return f"{filepath}/{filename}.pkl"
+
+def process_macro(results_list,filename):
     rl = [x.result for x in results_list]
     df = pd.DataFrame.from_dict(rl)
-    print(df)
-    print(results_list[0].df_trades.head(2))
-def analyse_pair(instrument, granularity, ma_long, ma_short):
+    append_df_to_file(df,filename)
+
+def process_trades(results_list,filename):
+     df = pd.concat([x.df_trades for x in results_list])
+     append_df_to_file(df,filename)
+def process_results(results_list,filepath):
+    process_macro(results_list,get_fullname(filepath,"ma_res"))
+    process_trades(results_list,get_fullname(filepath,"ma_trades"))
+
+    # rl = [x.result for x in results_list]
+    # df = pd.DataFrame.from_dict(rl)
+    # print(df)
+    # print(results_list[0].df_trades.head(2))
+def analyse_pair(instrument, granularity, ma_long, ma_short,filepath):
 
     ma_list = set(ma_long + ma_short)
     pair = instrument.name
@@ -97,13 +120,13 @@ def analyse_pair(instrument, granularity, ma_long, ma_short):
           ma_result = assess_pair(price_data, get_ma_col(ma_l), get_ma_col(ma_s),instrument,granularity)
           print(ma_result)
           results_list.append(ma_result)
-    process_results(results_list)
+    process_results(results_list,filepath)
         #   print(f"{pair} {granularity} {ma_s} {ma_l} nt:{nt} tg:{tg}")
-def run_ma_sim(curr_list=["EUR","USD"], granularity=["H1", "H4"],ma_long=[20,40,80],ma_short=[10,20]):
+def run_ma_sim(curr_list=["EUR","USD","AUD"], granularity=["H1", "H4"],ma_long=[20,40,80,120,150],ma_short=[10,20,30,40],filepath="./data"):
     ic.LoadInstruments("./data")
     for g in granularity:
         for p1 in curr_list:
             for p2 in curr_list:
                 pair = f"{p1}_{p2}"
                 if pair in ic.instruments_dict.keys():
-                    analyse_pair(ic.instruments_dict[pair],g,ma_long,ma_short)
+                    analyse_pair(ic.instruments_dict[pair],g,ma_long,ma_short,filepath)
