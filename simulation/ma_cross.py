@@ -121,6 +121,7 @@ def analyse_pair(instrument, granularity, ma_long, ma_short,filepath):
           print(ma_result)
           results_list.append(ma_result)
     process_results(results_list,filepath)
+    pass
         #   print(f"{pair} {granularity} {ma_s} {ma_l} nt:{nt} tg:{tg}")
 def run_ma_sim(curr_list=["EUR","USD","AUD"], granularity=["H1", "H4"],ma_long=[20,40,80,120,150],ma_short=[10,20,30,40],filepath="./data"):
     ic.LoadInstruments("./data")
