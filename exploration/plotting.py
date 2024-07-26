@@ -17,8 +17,9 @@ class CandlePlot:
     
     def create_candle_fig(self):
         self.add_timestr()
-        self.fig = make_subplots(specs=[[{"secondary_y:": True}]]) 
         self.fig = go.Figure()
+        self.fig = make_subplots(specs=[[{"secondary_y": True}]]) 
+      
         if self.candles == True:
             self.fig.add_trace(go.Candlestick(
                 x=self.df_plot.sTime,
