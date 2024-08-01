@@ -3,12 +3,14 @@ from infrastructure.instrument_collection import instrumentCollection
 from simulation.ma_cross import run_ma_sim
 from dateutil import parser
 from infrastructure.collect_data import run_collection
+from simulation.ema_macd import run_ema_macd
 
 if __name__ == '__main__':
     # api = OandaApi()
-    # instrumentCollection.LoadInstruments("./data")
+    instrumentCollection.LoadInstruments("./data")
+    run_ema_macd(instrumentCollection)
     # run_collection(instrumentCollection,api)
-    run_ma_sim()
+    #run_ma_sim()
     # print(api.fetch_candles("EUR_USD",granularity="D",price="MB"))
     # data = api.get_account_summary()
     # print(data)
