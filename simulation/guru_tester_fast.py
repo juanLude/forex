@@ -5,18 +5,14 @@ BUY = 1
 SELL = -1
 NONE = 0
 
+
+
 def apply_take_profit(row, PROFIT_FACTOR):
     if row.SIGNAL != NONE:
         if row.SIGNAL == BUY:
-            if row.direction == BUY:
-                return (row.ask_c - row.ask_o) * PROFIT_FACTOR + row.ask_c
-            else:
-                return (row.ask_o - row.ask_c) * PROFIT_FACTOR + row.ask_o
+            return (row.ask_c - row.ask_o) * PROFIT_FACTOR + row.ask_c
         else:
-            if row.direction == SELL:
-                return (row.bid_c - row.bid_o) * PROFIT_FACTOR + row.bid_c
-            else:
-                return (row.bid_o - row.bid_c) * PROFIT_FACTOR + row.bid_o
+            return (row.bid_c - row.bid_o) * PROFIT_FACTOR + row.bid_c
     else:
         return 0.0
 
@@ -53,48 +49,60 @@ def create_signals(df, time_d=1):
     return df_signals
 
 
+INDEX_start_price_BUY = 0
+INDEX_start_price_SELL = 1
+INDEX_SIGNAL = 2
+INDEX_TP = 3
+INDEX_SL = 4
+INDEX_time = 5
+INDEX_bid_h = 6
+INDEX_bid_l = 7
+INDEX_ask_h = 8
+INDEX_ask_l = 9
+INDEX_name = 10
+
 
 class Trade:
-    def __init__(self, row, profit_factor, loss_factor):
+    def __init__(self, list_values, index, profit_factor, loss_factor):
         self.running = True
-        self.start_index_m5 = row.name
+        self.start_index_m5 = list_values[INDEX_name][index]
         self.profit_factor = profit_factor
         self.loss_factor = loss_factor
         
-        if row.SIGNAL == BUY:
-            self.start_price = row.start_price_BUY
-            self.trigger_price = row.start_price_BUY
+        if list_values[INDEX_SIGNAL][index] == BUY:
+            self.start_price = list_values[INDEX_start_price_BUY][index]
+            self.trigger_price = list_values[INDEX_start_price_BUY][index]
             
-        if row.SIGNAL == SELL:
-            self.start_price = row.start_price_SELL
-            self.trigger_price = row.start_price_SELL
+        if list_values[INDEX_SIGNAL][index] == SELL:
+            self.start_price = list_values[INDEX_start_price_SELL][index]
+            self.trigger_price = list_values[INDEX_start_price_SELL][index]
             
-        self.SIGNAL = row.SIGNAL
-        self.TP = row.TP
-        self.SL = row.SL
+        self.SIGNAL = list_values[INDEX_SIGNAL][index]
+        self.TP = list_values[INDEX_TP][index]
+        self.SL = list_values[INDEX_SL][index]
         self.result = 0.0
-        self.end_time = row.time
-        self.start_time = row.time
+        self.end_time = list_values[INDEX_time][index]
+        self.start_time = list_values[INDEX_time][index]
         
-    def close_trade(self, row, result, trigger_price):
+    def close_trade(self, list_values, index, result, trigger_price):
         self.running = False
         self.result = result
-        self.end_time = row.time
+        self.end_time = list_values[INDEX_time][index]
         self.trigger_price = trigger_price
         
-    def update(self, row):
+    def update(self, list_values, index):
         if self.SIGNAL == BUY:
-            if row.bid_h >= self.TP:
-                self.close_trade(row, self.profit_factor, row.bid_h)
-            elif row.bid_l <= self.SL:
-                self.close_trade(row, self.loss_factor, row.bid_l)
+            if list_values[INDEX_bid_h][index] >= self.TP:
+                self.close_trade(list_values, index, self.profit_factor, list_values[INDEX_bid_h][index] )
+            elif list_values[INDEX_bid_l][index]  <= self.SL:
+                self.close_trade(list_values, index, self.loss_factor, list_values[INDEX_bid_l][index] )
         if self.SIGNAL == SELL:
-            if row.ask_l <= self.TP:
-                self.close_trade(row, self.profit_factor, row.ask_l)
-            elif row.ask_h >= self.SL:
-                self.close_trade(row, self.loss_factor, row.ask_h)   
+            if list_values[INDEX_ask_l][index] <= self.TP:
+                self.close_trade(list_values, index, self.profit_factor, list_values[INDEX_ask_l][index])
+            elif list_values[INDEX_ask_h][index] >= self.SL:
+                self.close_trade(list_values, index, self.loss_factor, list_values[INDEX_ask_h][index])   
 
-class GuruTester:
+class GuruTesterFast:
     def __init__(self, df_big,
                     apply_signal, 
                     df_m5,
@@ -133,18 +141,36 @@ class GuruTester:
         self.merged.fillna(0, inplace=True)
         self.merged.SIGNAL = self.merged.SIGNAL.astype(int)
 
+        
+
+
+
     def run_test(self):
-        #print("run_test...")
+        print("run_test...")
         open_trades_m5 = []
         closed_trades_m5 = []
 
-        for index, row in self.merged.iterrows():
+        list_value_refs = [
+            self.merged.start_price_BUY.array,
+            self.merged.start_price_SELL.array,
+            self.merged.SIGNAL.array,
+            self.merged.TP.array,
+            self.merged.SL.array,
+            self.merged.time.array,
+            self.merged.bid_h.array,
+            self.merged.bid_l.array,
+            self.merged.ask_h.array,
+            self.merged.ask_l.array,
+            self.merged.index.array,
+        ]
+
+        for index in range(self.merged.shape[0]):
             
-            if row.SIGNAL != NONE:
-                open_trades_m5.append(Trade(row, self.PROFIT_FACTOR, self.LOSS_FACTOR))  
+            if list_value_refs[INDEX_SIGNAL][index] != NONE:
+                open_trades_m5.append(Trade(list_value_refs, index, self.PROFIT_FACTOR, self.LOSS_FACTOR))  
                 
             for ot in open_trades_m5:
-                ot.update(row)
+                ot.update(list_value_refs, index)
                 if ot.running == False:
                     closed_trades_m5.append(ot)
             open_trades_m5 = [x for x in open_trades_m5 if x.running == True]
