@@ -114,6 +114,9 @@ class OandaApi:
         instrument = ic.instruments_dict[pair_name]
         units = round(units, instrument.tradeUnitsPrecision)
 
+        if direction == defs.SELL:
+            units = units * -1
+
         data = dict(
             order=dict(
                 units=str(units),
@@ -121,6 +124,14 @@ class OandaApi:
                 type="MARKET",
             )
         )
+
+        if stop_loss is not None:
+            sld = dict(price=str(round(stop_loss,instrument.displayPrecision)))
+            data['order']['stopLossOnFill'] = sld
+        
+        if take_profit is not None:
+            tpd = dict(price=str(round(take_profit,instrument.displayPrecision)))
+            data['order']['takeProfitOnFill'] = tpd
 
         print(data)
 
