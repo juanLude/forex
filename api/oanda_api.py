@@ -141,8 +141,8 @@ class OandaApi:
         ok, response = self.make_request(url, verb="post", data = data, code=201)
 
         print(ok, response)
-        if ok == True and 'orderCreateTransaction' in response:
-            return response['orderCreateTransaction']['id']
+        if ok == True and 'orderFillTransaction' in response:
+            return response['orderFillTransaction']['id']
         else:
             return None
     
