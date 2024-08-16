@@ -1,0 +1,21 @@
+2024-08-16 20:17:01 LogWrapper init() ./logs/GBP_JPY.log created
+2024-08-16 20:17:01 {'n_ma': 10, 'n_std': 1.5, 'n_maxspread': 0.04, 'mingain': 0.14, 'riskreward': 1.3}
+2024-08-16 20:17:02 CandleManager() init last_candle:last_candle: 24-08-16 10:16 is_ready: False
+2024-08-16 20:18:08 CandleManager() new candle: last_candle: 24-08-16 10:17 is_ready: True
+2024-08-16 20:18:09 tech_manager: max_rows:30 candle_time:2024-08-16 10:17:00+00:00 granularity:M1
+2024-08-16 20:18:09 process_candles:
+       PAIR                      time    mid_c    mid_o  SPREAD
+24  GBP_JPY 2024-08-16 10:13:00+00:00  191.696  191.722   0.035
+25  GBP_JPY 2024-08-16 10:14:00+00:00  191.690  191.697   0.032
+26  GBP_JPY 2024-08-16 10:15:00+00:00  191.684  191.693   0.033
+27  GBP_JPY 2024-08-16 10:16:00+00:00  191.690  191.680   0.032
+28  GBP_JPY 2024-08-16 10:17:00+00:00  191.699  191.692   0.034
+2024-08-16 20:19:04 CandleManager() new candle: last_candle: 24-08-16 10:18 is_ready: True
+2024-08-16 20:19:04 tech_manager: max_rows:30 candle_time:2024-08-16 10:18:00+00:00 granularity:M1
+2024-08-16 20:19:05 process_candles:
+       PAIR                      time    mid_c    mid_o  SPREAD
+24  GBP_JPY 2024-08-16 10:14:00+00:00  191.690  191.697   0.032
+25  GBP_JPY 2024-08-16 10:15:00+00:00  191.684  191.693   0.033
+26  GBP_JPY 2024-08-16 10:16:00+00:00  191.690  191.680   0.032
+27  GBP_JPY 2024-08-16 10:17:00+00:00  191.699  191.692   0.034
+28  GBP_JPY 2024-08-16 10:18:00+00:00  191.733  191.696   0.028
