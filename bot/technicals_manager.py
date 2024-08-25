@@ -3,6 +3,7 @@
 import pandas as pd
 
 from constants import defs
+from models.trade_decision import TradeDecision
 from technicals.indicators import BollingerBands
 
 pd.set_option('display.max_columns', None)
@@ -34,8 +35,10 @@ def process_candles(df: pd.DataFrame, pair, trade_settings: TradeSettings, log_m
     df['GAIN'] = abs(df.mid_c - df.BB_MA)
 
 
-    log_cols = ['PAIR', 'time', 'mid_c', 'mid_o', 'SPREAD', 'SIGNAL', 'GAIN']
+    log_cols = ['PAIR', 'time', 'mid_c', 'mid_o', 'SL','TP','SPREAD', 'SIGNAL', 'GAIN']
     log_message(f"process_candles:\n{df[log_cols].tail()}", pair)
+
+    return df[log_cols].df.iloc[-1]
     
 
 def fetch_candles(pair, row_count, candle_time, granularity, api: OandaApi, log_message):
@@ -58,5 +61,7 @@ def get_trade_decision(candle_time, pair, granularity, api: OandaApi, trade_sett
     df = fetch_candles(pair, max_rows, candle_time, granularity, api, log_message)
     
     if df is not None:
-       process_candles(df, pair, trade_settings, log_message)
+       last_row = process_candles(df, pair, trade_settings, log_message)
+       if last_row.SIGNAL != defs.NONE:
+           return TradeDecision(last_row)
     return None
