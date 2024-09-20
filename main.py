@@ -1,3 +1,4 @@
+from api.stream_prices import stream_prices
 from api.oanda_api import OandaApi
 from infrastructure.instrument_collection import instrumentCollection
 from simulation.ema_macd_mp import run_ema_macd
@@ -8,6 +9,7 @@ from infrastructure.collect_data import run_collection
 if __name__ == '__main__':
     # api = OandaApi()
     instrumentCollection.LoadInstruments("./data")
+    stream_prices(['GBP_JPY', 'AUD_NZD'])
     #run_ema_macd(instrumentCollection)
     # run_collection(instrumentCollection,api)
     #run_ma_sim()
@@ -19,4 +21,4 @@ if __name__ == '__main__':
     # instrumentCollection.LoadInstruments("./data")
     # instrumentCollection.PrintInstruments()
     # run_ma_sim(curr_list=["EUR","USD","GBP"]) 
-    run_ema_macd(instrumentCollection)
+    # run_ema_macd(instrumentCollection)
