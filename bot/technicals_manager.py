@@ -16,12 +16,28 @@ ADDROWS = 20
 
 def apply_signal(row, trade_settings: TradeSettings):
 
-    if row.SPREAD <= trade_settings.n_maxspread:
+    if row.SPREAD <= trade_settings.n_maxspread and row.GAIN >= trade_settings.n_mingain:
         if row.mid_c > row.BB_UP and row.mid_o < row.BB_UP:
             return defs.SELL
         elif row.mid_c < row.BB_LW and row.mid_o > row.BB_LW:
             return defs.BUY
     return defs.NONE
+
+def apply_SL(row, trade_settings: TradeSettings):
+    if row.SIGNAL == defs.BUY:
+        return row.mid_c - (row.GAIN / trade_settings.riskreward)
+    elif row.SIGNAL == defs.SELL:
+        return row.mid_c + (row.GAIN / trade_settings.riskreward)
+    return 0.0
+
+
+def apply_TP(row):
+    
+    if row.SIGNAL == defs.BUY:
+        return row.mid_c + row.GAIN
+    elif row.SIGNAL == defs.SELL:
+        return row.mid_c - row.GAIN
+    return 0.0
 
 def process_candles(df: pd.DataFrame, pair, trade_settings: TradeSettings, log_message):
 
@@ -31,11 +47,14 @@ def process_candles(df: pd.DataFrame, pair, trade_settings: TradeSettings, log_m
 
     # make indicator
     df = BollingerBands(df, trade_settings.n_ma, trade_settings.n_std)
-    df['SIGNAL'] = df.apply(apply_signal, axis=1, trade_settings=trade_settings)
     df['GAIN'] = abs(df.mid_c - df.BB_MA)
+    df['SIGNAL'] = df.apply(apply_signal, axis=1, trade_settings=trade_settings)
+   
+    df['TP'] = df.apply(apply_TP, axis=1)
+    df['SL'] = df.apply(apply_SL, axis=1, trade_settings=trade_settings)
+    df['LOSS'] = abs(df.mid_c - df.SL)
 
-
-    log_cols = ['PAIR', 'time', 'mid_c', 'mid_o', 'SL','TP','SPREAD', 'SIGNAL', 'GAIN']
+    log_cols = ['PAIR', 'time', 'mid_c', 'mid_o', 'SL','TP','SPREAD', 'SIGNAL', 'GAIN', 'LOSS']
     log_message(f"process_candles:\n{df[log_cols].tail()}", pair)
 
     return df[log_cols].df.iloc[-1]

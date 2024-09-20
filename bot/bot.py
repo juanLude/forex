@@ -30,7 +30,8 @@ class Bot:
     def load_settings(self):
         with open("./bot/settings.json", "r") as f:
             data = json.loads(f.read())
-            self.trade_settings = { k: TradeSettings(v, k) for k,v in data.items() }
+            self.trade_settings = { k: TradeSettings(v, k) for k,v in data['pairs'].items() }
+            self.trade_risk = data['trade_risk']
     def setup_logs(self):
         self.logs = {}
         for k in self.trade_settings.keys():
@@ -57,7 +58,7 @@ class Bot:
                 if trade_decision is not None and trade_decision.signal != defs.NONE:
                     self.log_message(f"Place trade: {trade_decision}", p)
                     self.log_to_main(f"Place trade: {trade_decision}")
-                    place_trade(trade_decision, self.api, self.log_message, self.log_to_error)
+                    place_trade(trade_decision, self.api, self.log_message, self.log_to_error, self.trade_risk)
 
     def run(self):
         while True:
