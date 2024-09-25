@@ -1,4 +1,4 @@
-# from api.stream_prices import stream_prices
+
 from api.oanda_api import OandaApi
 from infrastructure.instrument_collection import instrumentCollection
 from simulation.ema_macd_mp import run_ema_macd

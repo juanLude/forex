@@ -21,10 +21,16 @@ class PriceStreamer(threading.Thread):
         self.log = LogWrapper("PriceStreamer")
         print(self.pairs_list)
 
+    def fire_new_price_event(self, instrument):
+        if self.price_events[instrument].is_set() == False:
+            self.price_events[instrument].set()
+
     def update_live_price(self, live_price: LiveApiPrice):
         try:
             self.price_lock.acquire()
             self.shared_prices[live_price.instrument] = live_price
+            self.fire_new_price_event(live_price.instrument)
+
         except Exception as error:
             self.log.logger.error(f"Exception: {error}")
         finally:
@@ -32,8 +38,10 @@ class PriceStreamer(threading.Thread):
     
     def log_data(self):
         self.log.logger.debug("")
+        self.log.logger.debug(f"\n{pd.DataFrame.from_dict([v.get_dict() for _, v in self.shared_prices.items()])}")
 
     def run(self):
+
         start = timer() - PriceStreamer.LOG_FREQ + 10
 
         params = dict(
@@ -48,7 +56,9 @@ class PriceStreamer(threading.Thread):
             if price:
                 decoded_price = json.loads(price.decode('utf-8')) 
                 if 'type' in decoded_price and decoded_price['type'] == 'PRICE':
-                    print(LiveApiPrice(decoded_price).get_dict())
-                    self.update_live_price(LiveApiPrice(decoded_price).get_dict())
+                    #print(LiveApiPrice(decoded_price).get_dict())
+                    self.update_live_price(LiveApiPrice(decoded_price))
                     if timer() - start > PriceStreamer.LOG_FREQ:
+                        print(LiveApiPrice(decoded_price).get_dict())
+                        self.log_data()
                         start = timer()

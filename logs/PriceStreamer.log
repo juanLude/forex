@@ -1,48 +1,9 @@
-2024-09-25 16:46:27 LogWrapper init() ./logs/PriceStreamer.log created
-2024-09-25 16:46:28 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:28 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:28 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:28 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:28 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:29 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:30 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:30 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:30 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:30 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:31 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:33 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:33 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:33 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:33 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:33 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:34 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:34 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:34 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:34 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:34 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:35 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:36 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:37 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:37 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:37 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:37 Exception: 'dict' object has no attribute 'instrument'
-2024-09-25 16:46:37 
+2024-09-25 18:24:11 LogWrapper init() ./logs/PriceStreamer.log created
+2024-09-25 18:24:21 
+2024-09-25 18:24:21 
+  instrument                             time        ask        bid
+0    GBP_CHF 2024-09-25 08:24:18.494578+00:00    1.13152    1.13133
+1    EUR_CHF 2024-09-25 08:24:17.267136+00:00    0.94589    0.94576
+2    GBP_JPY 2024-09-25 08:24:18.757327+00:00  192.65200  192.62300
+3    GBP_USD 2024-09-25 08:24:19.362160+00:00    1.33841    1.33828
+4    EUR_GBP 2024-09-25 08:24:19.115943+00:00    0.83599    0.83591
