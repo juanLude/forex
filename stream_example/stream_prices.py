@@ -6,19 +6,17 @@ from timeit import default_timer as timer
 import constants.defs as defs
 from infrastructure.log_wrapper import LogWrapper
 from models.live_api_price import LiveApiPrice
+from stream_example.stream_base import StreamBase
 
 STREAM_URL = f"https://stream-fxpractice.oanda.com/v3"
 
-class PriceStreamer(threading.Thread):
+class PriceStreamer(StreamBase):
 
     LOG_FREQ = 60
     def __init__(self, shared_prices, price_lock: threading.Lock, price_events):
-        super().__init__()
+        super().__init__(shared_prices, price_lock, price_events, "PriceStreamer")
         self.pairs_list = shared_prices.keys()
-        self.price_lock = price_lock
-        self.price_events = price_events
-        self.shared_prices = shared_prices
-        self.log = LogWrapper("PriceStreamer")
+  
         print(self.pairs_list)
 
     def fire_new_price_event(self, instrument):
@@ -32,13 +30,13 @@ class PriceStreamer(threading.Thread):
             self.fire_new_price_event(live_price.instrument)
 
         except Exception as error:
-            self.log.logger.error(f"Exception: {error}")
+            self.log_message(f"Exception: {error}", error=True)
         finally:
             self.price_lock.release()
     
     def log_data(self):
-        self.log.logger.debug("")
-        self.log.logger.debug(f"\n{pd.DataFrame.from_dict([v.get_dict() for _, v in self.shared_prices.items()])}")
+        self.log_message("")
+        self.log_message(f"\n{pd.DataFrame.from_dict([v.get_dict() for _, v in self.shared_prices.items()])}")
 
     def run(self):
 

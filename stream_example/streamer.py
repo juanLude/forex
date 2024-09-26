@@ -2,7 +2,8 @@ import json
 import threading
 import time
 
-from api.stream_prices import PriceStreamer
+from stream_example.stream_prices import PriceStreamer
+from stream_example.stream_processor import PriceProcessor
 
 def load_settings():
     with open("./bot/settings.json", "r") as f:
@@ -26,9 +27,12 @@ def run_streamer():
     threads.append(price_stream_t)
     price_stream_t.start()
 
-    # for t in threads:
-    #     t.join()
-    
+    for p in settings['pairs'].keys():
+        processing_t = PriceProcessor(shared_prices, shared_prices_lock, shared_prices_events, f"PriceProcessor_{p}", p)
+        processing_t.daemon = True
+        threads.append(processing_t)
+        processing_t.start()
+        
     try:
         while True:
             time.sleep(0.5)
