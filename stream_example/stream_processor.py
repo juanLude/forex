@@ -1,14 +1,15 @@
 import copy
+from queue import Queue
 import random
 import threading
 import time
 from stream_example.stream_base import StreamBase
 
 class PriceProcessor(StreamBase):
-    def __init__(self, shared_prices, price_lock: threading.Lock, price_events, logname, pair):
+    def __init__(self, shared_prices, price_lock: threading.Lock, price_events, logname, pair, work_queue: Queue):
         super().__init__(shared_prices, price_lock, price_events, logname)
         self.pair = pair
-
+        self.work_queue = work_queue
     def process_price(self):
 
         price = None
@@ -27,6 +28,8 @@ class PriceProcessor(StreamBase):
             self.log_message(f"Found price: {price}")
             time.sleep(random.randint(2, 5))
             self.log_message(f"Done processing price: {price}")
+            if random.randint(0,5) == 3:
+                self.work_queue.put(price)
     def run(self):
 
         while True:
