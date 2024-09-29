@@ -1,0 +1,3 @@
+2024-09-28 16:02:15 LogWrapper init() ./logs/PriceProcessor_GBP_CHF.log created
+2024-09-28 16:02:15 Found price : ApiPrice() GBP_CHF 1.12413 1.12387 2024-09-27 20:59:05.229189+00:00
+2024-09-28 16:02:19 Done processing price : ApiPrice() GBP_CHF 1.12413 1.12387 2024-09-27 20:59:05.229189+00:00

@@ -6,7 +6,7 @@ from models.live_api_price import LiveApiPrice
 
 class WorkProcessor(threading.Thread):
 
-    def __intit__(self, work_queue: Queue):
+    def __init__(self, work_queue: Queue):
         super().__init__()
         self.work_queue = work_queue
         self.log = LogWrapper("WorkProcessor")

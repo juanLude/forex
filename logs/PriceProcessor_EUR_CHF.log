@@ -1,0 +1,4 @@
+2024-09-28 16:02:15 LogWrapper init() ./logs/PriceProcessor_EUR_CHF.log created
+2024-09-28 16:02:15 Found price : ApiPrice() EUR_CHF 0.93849 0.93825 2024-09-27 20:59:05.197890+00:00
+2024-09-28 16:02:19 Done processing price : ApiPrice() EUR_CHF 0.93849 0.93825 2024-09-27 20:59:05.197890+00:00
+2024-09-28 16:02:19 Adding work : ApiPrice() EUR_CHF 0.93849 0.93825 2024-09-27 20:59:05.197890+00:00
