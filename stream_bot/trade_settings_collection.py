@@ -2,6 +2,8 @@
 
 import json
 
+from models.trade_settings import TradeSettings
+
 
 class TradeSettingsCollection:
 
@@ -19,3 +21,13 @@ class TradeSettingsCollection:
             data = json.loads(f.read())
             self.granularity = data['granularity']
             self.trade_risk = data['trade_risk']
+            for pair, pair_settings in data['pairs'].items():
+                self.trade_settings_dict[pair] = TradeSettings(pair_settings, pair)
+    
+    def print_collection(self):
+        print(f"Granularity: {self.granularity}")
+        print(f"Trade risk: {self.trade_risk}")
+        [print(f"{k}: {v}") for k, v in self.trade_settings_dict.items()]
+
+
+tradeSettingsCollection = TradeSettingsCollection()
