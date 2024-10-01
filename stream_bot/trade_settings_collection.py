@@ -29,5 +29,7 @@ class TradeSettingsCollection:
         print(f"Trade risk: {self.trade_risk}")
         [print(f"{k}: {v}") for k, v in self.trade_settings_dict.items()]
 
-
+    def pair_list(self)->list:
+        return list(self.trade_settings_dict.keys())
+    
 tradeSettingsCollection = TradeSettingsCollection()

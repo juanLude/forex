@@ -1,3 +1,1 @@
-2024-09-28 16:02:15 LogWrapper init() ./logs/PriceProcessor_EUR_GBP.log created
-2024-09-28 16:02:15 Found price : ApiPrice() EUR_GBP 0.83482 0.83467 2024-09-27 20:59:05.203316+00:00
-2024-09-28 16:02:20 Done processing price : ApiPrice() EUR_GBP 0.83482 0.83467 2024-09-27 20:59:05.203316+00:00
+2024-10-01 18:05:15 LogWrapper init() ./logs/PriceProcessor_EUR_GBP.log created
