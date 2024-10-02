@@ -3,6 +3,7 @@ from queue import Queue
 import threading
 
 import pytz
+from models.live_api_price import LiveApiPrice
 from stream_example.stream_base import StreamBase
 import datetime as dt
 
@@ -22,20 +23,37 @@ class PriceProcessor(StreamBase):
         self.pair = pair
         self.granularity = GRANULARITIES[granularity]
 
+        now = dt.datetime.now(pytz.timezone("UTC"))
+        self.set_last_candle(now)
+        print(f" PriceProcessor: {self.last_complete_candle_time} {now}")
+
+    def set_last_candle(self, price_time: dt.datetime):
+        self.last_complete_candle_time = self.round_time_down(price_time - dt.timedelta(minutes=self.granularity))
+
     def round_time_down(self, round_me: dt.datetime) -> dt.datetime:
         remainder = round_me.minute % self.granularity
-        candle_time = dt.datetime(round_me.year, round_me.month, round_me.day, round_me.hour, 
-                                  round_me.minute - remainder, tzinfo=pytz.timezone("UTC"))
+        candle_time = dt.datetime(round_me.year, 
+                                  round_me.month, 
+                                  round_me.day, 
+                                  round_me.hour, 
+                                  round_me.minute - remainder, 
+                                  tzinfo=pytz.timezone("UTC"))
         return candle_time
       
 
-
+    def detect_new_candle(self, price: LiveApiPrice):
+        old = self.last_complete_candle_time
+        if old < self.last_complete_candle_time:
+            msg = f"---->> {self.pair} New Candle: {self.last_complete_candle_time} {price.time}"
+            print(msg)
     def process_price(self):
 
         try:
             self.price_lock.acquire()
             price = copy.deepcopy(self.shared_prices[self.pair])
             #print("PriceProcessor: ", price)
+            if price is not None:
+                self.detect_new_candle(price)
         except Exception as error:
             self.log_message(f"CRASH : {error}", error=True)
         finally:

@@ -26,7 +26,7 @@ def run_bot():
 
     for p in tradeSettingsCollection.pair_list():
         processing_t = PriceProcessor(shared_prices, shared_prices_lock, shared_prices_events,
-                                    f"PriceProcessor_{p}", p)
+                                    f"PriceProcessor_{p}", p, tradeSettingsCollection.granularity)
         processing_t.daemon = True
         threads.append(processing_t)
         processing_t.start()    
