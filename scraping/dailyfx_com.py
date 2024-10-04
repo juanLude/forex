@@ -11,6 +11,10 @@ def dailyfx_com():
 
     soup = BeautifulSoup(resp.content, 'html.parser')
 
-    print(soup)
+    #print(soup)
 
-    print("Done")
+    rows = soup.select(".")
+
+    # 196 - check from there
+
+    
