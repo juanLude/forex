@@ -23,9 +23,9 @@ def bloomberg_com():
     cards = soup.select('[class^="media-story-card__body"]')
     
     for card in cards:
-        ca = card.find('a', {'data-testid': 'Heading'})
+        ca = card.find('a', {'data-testid': 'Link'})
         if ca:  # Check if 'ca' is not None
             links.append(get_article(ca))
-        else:
-            print(f"Warning: 'a' tag with data-testid='Heading' not found in card: {card}")
+        # else:
+        #     print(f"Warning: 'a' tag with data-testid='Heading' not found in card: {card}")
     return links
