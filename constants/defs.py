@@ -10,3 +10,5 @@ SECURE_HEADER = {
 BUY = 1
 SELL = -1
 NONE = 0
+
+MONGO_CONN_STR = "mongodb+srv://jmludevid:Ruggieri2733@cluster0.upqw8no.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"

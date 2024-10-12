@@ -6,6 +6,7 @@ from simulation.ma_cross import run_ma_sim
 from dateutil import parser
 from infrastructure.collect_data import run_collection
 from stream_example.streamer import run_streamer
+from db.db import DataDB
 
 if __name__ == '__main__':
     api = OandaApi()
@@ -23,4 +24,6 @@ if __name__ == '__main__':
     # instrumentCollection.PrintInstruments()
     # run_ma_sim(curr_list=["EUR","USD","GBP"]) 
     # run_ema_macd(instrumentCollection)
-    run_streamer()
+    # run_streamer()
+    d = DataDB()
+    d.test_connection()

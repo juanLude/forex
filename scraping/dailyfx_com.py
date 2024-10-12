@@ -18,3 +18,4 @@ def dailyfx_com():
     # 196 - check from there
 
     
+# 
