@@ -4,6 +4,9 @@ import requests
 from dateutil import parser
 import time
 import datetime as dt
+import random
+
+from db.db import DataDB
 
 pd.set_option('display.max_rows', None)
 
@@ -79,15 +82,19 @@ def get_fx_calendar(from_date):
     return final_data
 
 def fx_calendar():
-    final_data = []
+    #final_data = []
 
-    start = parser.parse("2022-03-07T00:00:00Z")
+    start = parser.parse("2021-05-03T00:00:00Z")
     end = parser.parse("2022-03-25T00:00:00Z")
 
+    database = DataDB()
+
     while start < end:
-        print(start)
-        final_data += get_fx_calendar(start)
+        
+        data = get_fx_calendar(start)
+        print(start,len(data))
+        database.add_many(DataDB.CALENDAR_COLLECTION, data)
         start = start + dt.timedelta(days=7)
-        time.sleep(1)
+        time.sleep(random.randint(1,3))
     
-    print(pd.DataFrame.from_dict(final_data))
+    #print(pd.DataFrame.from_dict(final_data))

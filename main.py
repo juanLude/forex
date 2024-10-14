@@ -8,9 +8,17 @@ from infrastructure.collect_data import run_collection
 from stream_example.streamer import run_streamer
 from db.db import DataDB
 
+
+
+def db_tests():
+    d = DataDB()
+    #d.add_one(DataDB.SAMPLE_COLLECTION, dict(age=12, name="Julian", eyes=2))
+    print(d.query_all(DataDB.SAMPLE_COLLECTION))
+
 if __name__ == '__main__':
     api = OandaApi()
-    instrumentCollection.LoadInstruments("./data")
+    #instrumentCollection.LoadInstruments("./data")
+    instrumentCollection.CreateDB(api.get_account_instruments())
     #stream_prices(['GBP_JPY', 'AUD_NZD'])
     #run_ema_macd(instrumentCollection)
     # run_collection(instrumentCollection,api)
@@ -25,5 +33,6 @@ if __name__ == '__main__':
     # run_ma_sim(curr_list=["EUR","USD","GBP"]) 
     # run_ema_macd(instrumentCollection)
     # run_streamer()
-    d = DataDB()
-    d.test_connection()
+    # d = DataDB()
+    # d.test_connection()
+    #db_tests()
