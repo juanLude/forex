@@ -23,3 +23,26 @@ body {
   font-weight: 700;
   padding: 1rem;
 }
+
+#navlinks {
+  display: flex;
+}
+
+.navlink {
+  padding: 1rem;
+}
+
+.navlink a {
+  color: white;
+}
+
+.navlink a:visited {
+  color: white;
+}
+.navlink a:hover {
+  color: #ddd;
+}
+
+.titleHead {
+  padding-top: 1rem;
+}

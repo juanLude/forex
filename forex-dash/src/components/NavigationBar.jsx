@@ -1,12 +1,13 @@
 import React from "react";
+import NavbarLink from "./NavbarLink";
 
 function NavigationBar() {
   return (
     <div id="navbar">
       <div className="navtitle">Forex Dash</div>
       <div id="navlinks">
-        <span>Home</span>
-        <span>Dashboard</span>
+        <NavbarLink path="/" text="Home" />
+        <NavbarLink path="/dashboard" text="Dashboard" />
       </div>
     </div>
   );
