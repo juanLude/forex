@@ -46,3 +46,14 @@ body {
 .titleHead {
   padding-top: 1rem;
 }
+
+.account-row {
+  display: flex;
+}
+
+.account-row .header {
+  flex-basis: 40%;
+}
+.account-row .bold {
+  font-weight: 700;
+}
