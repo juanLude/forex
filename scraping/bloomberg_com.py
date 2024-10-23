@@ -23,7 +23,8 @@ def bloomberg_com():
     cards = soup.select('[class^="media-story-card__body"]')
     
     for card in cards:
-        ca = card.find('a', {'data-testid': 'Link'})
+        ca = card.find('a', {'data-testid': 'Heading'})
+        #ca =  card.select_one('h3[data-testid="Heading"] a[data-testid="Link"]')
         if ca:  # Check if 'ca' is not None
             links.append(get_article(ca))
         # else:
