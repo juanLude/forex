@@ -59,7 +59,7 @@ function Dashboard() {
       </div>
       <TitleHead title="Technicals" />
       {technicalsData && <Technicals data={technicalsData} />}
-
+      {/* test */}
       <TitleHead title="Price Chart" />
       {priceData && (
         <PriceChart
