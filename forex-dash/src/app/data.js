@@ -7,3 +7,9 @@ export const GRANULARITIES = [
   { key: "H1", text: "H1", value: "H1" },
   { key: "D", text: "D", value: "D" },
 ];
+
+export const COUNTS = [
+  { key: "50", text: "50", value: "50" },
+  { key: "100", text: "100", value: "100" },
+  { key: "200", text: "200", value: "200" },
+];
