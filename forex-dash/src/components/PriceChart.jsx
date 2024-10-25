@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "./Select";
 import { COUNTS } from "../app/data";
-import { useEffect } from "react";
 import { drawChart } from "../app/chart";
 
 function PriceChart({
@@ -14,6 +12,10 @@ function PriceChart({
 }) {
   useEffect(() => {
     if (priceData) {
+      console.log("hola");
+
+      //console.log("Draw Chart",selectedPair,selectedGranularity);
+      //console.log("Draw Chart",selectedCount);
       drawChart(priceData, selectedPair, selectedGranularity, "chartDiv");
     }
   }, [priceData]);
@@ -22,7 +24,7 @@ function PriceChart({
     <div className="segment" id="price-chart-holder">
       <Select
         name="numrows"
-        title="Num. Rows"
+        title="Num. Rows."
         options={COUNTS}
         defaultValue={selectedCount}
         onSelected={handleCountChange}

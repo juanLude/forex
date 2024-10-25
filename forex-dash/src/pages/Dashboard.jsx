@@ -27,13 +27,14 @@ function Dashboard() {
       selectedGranularity,
       count
     );
-    setPriceData(data);
+    console.log("from loadPrices", data);
+    setPriceData(data[0]);
   };
 
   const loadTechnicals = async () => {
     const data = await endPoints.technicals(selectedPair, selectedGranularity);
-    console.log(data);
-    setTechnicalsData(data);
+    console.log(data[0]);
+    setTechnicalsData(data[0]);
     loadPrices(selectedCount);
   };
   return (
@@ -58,6 +59,7 @@ function Dashboard() {
       </div>
       <TitleHead title="Technicals" />
       {technicalsData && <Technicals data={technicalsData} />}
+
       <TitleHead title="Price Chart" />
       {priceData && (
         <PriceChart
@@ -65,6 +67,7 @@ function Dashboard() {
           selectedPair={selectedPair}
           selectedGranularity={selectedGranularity}
           handleCountChange={handleCountChange}
+          priceData={priceData}
         />
       )}
     </div>

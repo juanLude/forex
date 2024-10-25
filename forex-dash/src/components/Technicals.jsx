@@ -3,18 +3,18 @@ import Progress from "./Progress";
 
 const HEADERS = ["R1", "R2", "R3", "S1", "S2", "S3", "pivot"];
 function Technicals({ data }) {
-  console.log(data[0].percent_bearish);
+  console.log(data.percent_bearish);
   return (
     <div className="segment">
       <Progress
         title="Bullish"
         colour="#21ba45"
-        percentage={data[0].percent_bullish}
+        percentage={data.percent_bullish}
       />
       <Progress
         title="Bearish"
         colour="#db2828"
-        percentage={data[0].percent_bearish}
+        percentage={data.percent_bearish}
       />
       <table>
         <thead>
@@ -25,7 +25,7 @@ function Technicals({ data }) {
           </tr>
           <tr>
             {HEADERS.map((item) => (
-              <td key={item}>{data[0][item]}</td>
+              <td key={item}>{data[item]}</td>
             ))}
           </tr>
         </thead>
