@@ -117,7 +117,7 @@ class OandaApi:
 
     def web_api_candles(self, pair_name, granularity, count):
         df = self.get_candles_df(pair_name, granularity=granularity, count = count)
-        if df.shape[0] == 0:
+        if df is None or df.shape[0] == 0:
             return None
         cols = ['time', 'mid_o', 'mid_h', 'mid_l', 'mid_c']
         df = df[cols].copy()
