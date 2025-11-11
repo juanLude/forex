@@ -2,11 +2,7 @@ import os
 import pandas as pd
 from infrastructure.instrument_collection import instrumentCollection as ic
 
-BUY = 1
-SELL = -1
-NONE = 0
-get_ma_col = lambda period: f'MA_{period}'
-add_cross = lambda x: f"{x.ma_s}_{x.ma_l}"
+
 
 class MAResult:
     def __init__(self, df_trades, pairname, ma_l, ma_s, granularity):
@@ -32,6 +28,12 @@ class MAResult:
             'granularity': self.granularity 
            
         }
+
+BUY = 1
+SELL = -1
+NONE = 0
+get_ma_col = lambda period: f'MA_{period}'
+add_cross = lambda x: f"{x['MA_SHORT']}_{x['MA_LONG']}"
 
 def process_results(results_list, filepath):
     process_macro(results_list, get_fullname(filepath, "ma_cross_results"))
@@ -80,7 +82,7 @@ def assess_pair(price_data, ma_long, ma_short, instrument, granularity):
     return MAResult(df_trades, instrument.name, ma_long, ma_short, granularity)
 
 def append_df_to_file(df, filename):
-    if os.path.isfile(filename):
+    if os.path.isfile(filename): # if file exists, load and append
         fd = pd.read_pickle(filename)
         df = pd.concat([fd, df])
     df.reset_index(drop=True, inplace=True)
@@ -97,7 +99,7 @@ def process_macro(results_list, fullname):
     append_df_to_file(df, fullname)
 
 def process_trades(results_list, filename):
-    df = pd.concat([x.df_trades for x in results_list])
+    df = pd.concat([x.df_trades for x in results_list]) 
     append_df_to_file(df, filename)
 
 def analyse_pair(instrument, granularity, ma_long,ma_short, filepath):
@@ -118,6 +120,7 @@ def analyse_pair(instrument, granularity, ma_long,ma_short, filepath):
             results_list.append(ma_result)
     
     process_results(results_list, filepath)
+    
 
 
 
